@@ -19,6 +19,7 @@ public:
 private slots:
     void getLoginUrl();
     void getLoginInfo();
+    void getBuvid();
 
 private:
     void error(QString msg, QString title = "");
@@ -28,9 +29,11 @@ signals:
 
 private:
     Ui::QRCodeLoginDialog *ui;
-
-    QString oauthKey;
+    
+    QString qrcode_key;
     QTimer* queryTimer;
+
+    QString b_3, b_4, b_nut;
 };
 
 #endif // QRCODELOGINDIALOG_H
