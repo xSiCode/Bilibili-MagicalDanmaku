@@ -1,0 +1,55 @@
+name: Build Qt App
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '5.13.2'
+        target: 'desktop'
+        arch: 'win64_mingw73'
+    - name: Build
+      run: |
+        qmake
+        mingw32-make
+    - name: Deploy dependencies
+      shell: pwsh
+      run: |
+        # 找到主 exe
+        $exe = Get-ChildItem -Recurse -Filter *.exe | Where-Object { $_.Name -match "神奇弹幕|MagicalDanmaku" } | Select-Object -First 1
+        if (-not $exe) {
+          Write-Host "::error::未找到 exe 文件"
+          exit 1
+        }
+        Write-Host "找到 exe: $($exe.FullName)"
+    
+        # 运行 windeployqt 部署 Qt 依赖
+        & windeployqt $exe.FullName
+    
+        # 准备部署目录
+        $deployDir = "deploy"
+        Remove-Item -Recurse -Force $deployDir -ErrorAction SilentlyContinue
+        New-Item -ItemType Directory -Path $deployDir -Force
+    
+        # 复制 exe 所在目录的所有文件（包括第三方 DLL）
+        Copy-Item -Path "$($exe.DirectoryName)\*" -Destination $deployDir -Recurse
+    
+        # 额外确保 qhttpserver.dll 被复制（如果不在上述目录中，则从其他位置查找）
+        $qhttpserver = Get-ChildItem -Recurse -Filter "qhttpserver.dll" | Select-Object -First 1
+        if ($qhttpserver) {
+            Copy-Item -Path $qhttpserver.FullName -Destination $deployDir -Force
+            Write-Host "已复制 qhttpserver.dll"
+        } else {
+            Write-Host "警告：未找到 qhttpserver.dll"
+        }
+    
+        # 可选：列出部署目录内容供调试
+        Get-ChildItem $deployDir
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: MagicalDanmaku
+        path: deploy/
