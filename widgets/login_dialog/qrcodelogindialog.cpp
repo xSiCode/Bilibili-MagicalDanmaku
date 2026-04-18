@@ -19,6 +19,10 @@ QRCodeLoginDialog::QRCodeLoginDialog(QWidget *parent) :
 
     queryTimer->setInterval(3000);
     connect(queryTimer, SIGNAL(timeout()), this, SLOT(getLoginInfo()));
+
+    QTimer::singleShot(1000, this, [=]{
+        getBuvid();
+    });
 }
 
 QRCodeLoginDialog::~QRCodeLoginDialog()
@@ -28,13 +32,12 @@ QRCodeLoginDialog::~QRCodeLoginDialog()
 
 void QRCodeLoginDialog::getLoginUrl()
 {
-    get("http://passport.bilibili.com/qrcode/getLoginUrl", [=](MyJson json){
+    get("https://passport.bilibili.com/x/passport-login/web/qrcode/generate", [=](MyJson json){
         if (json.code())
             return error("code不为0：" + QString::number(json.code()));
         MyJson data = json.data();
-        
         QString jsons(data, url);
-        this->jsons(data, oauthKey);
+        this->jsons(data, qrcode_key);
 
         // 生成QRCode
         QRcode* qrcode = QRcode_encodeString(url.toUtf8(), 2, QR_ECLEVEL_Q, QR_MODE_8, 1);
@@ -71,39 +74,69 @@ void QRCodeLoginDialog::getLoginUrl()
 
 void QRCodeLoginDialog::getLoginInfo()
 {
-    post("http://passport.bilibili.com/qrcode/getLoginInfo", QStringList{"oauthKey", oauthKey}, [=](QNetworkReply* reply){
+    get("https://passport.bilibili.com/x/passport-login/web/qrcode/poll?qrcode_key=" + qrcode_key, [=](QNetworkReply* reply){
         MyJson json(reply->readAll());
-        int jsonb(json, status);
-        QString jsons(json, message);
+        if (json.code())
+            return error("code不为0：" + QString::number(json.code()));
 
-        if (!status)
+        MyJson data = json.data();
+        int jsoni(data, code);
+        if (code == 0) // 成功
         {
-            int jsoni(json, data);
-            if (data == -1)
-                ui->statusLabel->setText("秘钥错误");
-            else if (data == -4) // 秘钥正确但未扫描
-                ui->statusLabel->setText("等待扫描");
-            else if (data == -5) // 扫描成功但未确认
-                ui->statusLabel->setText("等待确认");
-        }
-        else // 成功
-        {
-            ui->statusLabel->setText("扫描成功，5秒钟后登录");
+            ui->statusLabel->setText("扫描成功，即将登录");
             QVariant variantCookies = reply->header(QNetworkRequest::SetCookieHeader);
             QList<QNetworkCookie> cookies = qvariant_cast<QList<QNetworkCookie> >(variantCookies);
             QStringList sl;
             foreach (QNetworkCookie cookie, cookies)
             {
-                QString s = cookie.toRawForm();
-                if (s.contains("expires"))
-                    sl << s;
+                sl << cookie.toRawForm();
             }
 
-            QTimer::singleShot(1000, [=]{
+            // 添加buvid
+            if (!b_3.isEmpty() && !(sl.join(";").contains("buvid3=")))
+                sl << "buvid3=" + b_3;
+            if (!b_4.isEmpty() && !(sl.join(";").contains("buvid4=")))
+                sl << "buvid4=" + b_4;
+            if (!b_nut.isEmpty() && !(sl.join(";").contains("b_nut=")))
+                sl << "b_nut=" + b_nut;
+
+            // 添加刷新token
+            QString refresh_token = data.s("refresh_token");
+            sl << "ac_time_value=" + refresh_token;
+            qDebug() << "设置refresh_token:" << refresh_token;
+
+            QTimer::singleShot(1000, this, [=]{
                 emit logined(sl.join(";"));
                 this->close();
             });
         }
+        else if(code == 86038) // 二维码已失效
+        {
+            ui->statusLabel->setText("二维码已失效");
+        }
+        else if(code == 86090) // 已扫描但未确认
+        {
+            ui->statusLabel->setText("等待确认");
+        }
+        else if(code == 86101) // 未扫描
+        {
+            ui->statusLabel->setText("等待扫描");
+        }
+    });
+}
+
+/**
+ * 登录设置buvid
+ * https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/docs/misc/buvid3_4.md
+ */
+void QRCodeLoginDialog::getBuvid()
+{
+    get("https://api.bilibili.com/x/frontend/finger/spi", [=](MyJson json) {
+        MyJson data = json.data();
+        this->b_3 = data.s("b_3");
+        this->b_4 = data.s("b_4");
+        this->b_nut = QString::number(QDateTime::currentSecsSinceEpoch());
+        qDebug() << "获取到BUVID:" << b_3 << b_4;
     });
 }
 
