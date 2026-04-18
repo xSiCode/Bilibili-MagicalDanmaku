@@ -32,7 +32,7 @@ void QRCodeLoginDialog::getLoginUrl()
         if (json.code())
             return error("code不为0：" + QString::number(json.code()));
         MyJson data = json.data();
-        QString url;  // 缺少这行声明
+        
         QString jsons(data, url);
         this->jsons(data, oauthKey);
 
