@@ -13,7 +13,7 @@ jobs:
         arch: 'win64_mingw73'
     - name: Build
       run: |
-        # qmake CONFIG+=debug           ← 添加 CONFIG+=debug
+        qmake # CONFIG+=debug           ← 添加 CONFIG+=debug
         mingw32-make
     - name: Deploy dependencies
       shell: pwsh
