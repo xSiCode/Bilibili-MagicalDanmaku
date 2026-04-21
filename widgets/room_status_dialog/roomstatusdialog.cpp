@@ -156,7 +156,7 @@ void RoomStatusDialog::refreshRoomStatus(QString roomId)
         QJsonObject json = document.object();
         if (json.value("code").toInt() != 0)
         {
-            qDebug() << "返回结果不为0：" << json.value("message").toString();
+            qDebug() << "返回结果不为0：roomstatusdialog refreshRoomStatus" << json.value("message").toString();
             return ;
         }
 
