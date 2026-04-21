@@ -77,6 +77,32 @@ void MainWindow::initView()
         button->setRadius(fluentRadius);
         connect(button, &InteractiveButtonBase::clicked, this, [=]{
             int prevIndex = ui->stackedWidget->currentIndex();
+			
+                        // 特殊处理：答谢按钮需要跳转到extensionPage并切换到答谢tab
+                        if (button == ui->thankPageButton)
+                        {
+                            // 切换到扩展页面（索引4）
+                            ui->stackedWidget->setCurrentIndex(4);
+                            // 切换到答谢标签页（tab_4是索引2）
+                            ui->tabWidget->setCurrentIndex(2);
+
+                            // 隐藏房间ID控件
+                            hideRoomIdWidget();
+
+                            // 保存状态
+                            settings->setValue("mainwindow/stackIndex", 4);
+                            settings->setValue("mainwindow/tabIndex", 2);
+
+                            // 更新按钮样式
+                            foreach (auto btn, sideButtonList)
+                            {
+                                btn->setNormalColor(Qt::transparent);
+                                btn->update();
+                            }
+                            sideButtonList.at(2)->setNormalColor(themeSbg);
+                            return ;
+                        }
+			
             if (prevIndex == i) // 同一个索引，不用重复切换
                 return ;
 
