@@ -88,7 +88,7 @@ void GuardOnlineDialog::refreshOnlineGuards(int page)
         QJsonObject json = document.object();
         if (json.value("code").toInt() != 0)
         {
-            qDebug() << "返回结果不为0：" << json.value("message").toString();
+            qDebug() << "返回结果不为0：guardonlinedialog refreshOnlineGuards" << json.value("message").toString();
             return ;
         }
 
