@@ -127,7 +127,21 @@ void MainWindow::initView()
 	            sideButtonList.at(3)->setNormalColor(themeSbg);
 	            return ;
 	        }
-
+			else if (i == 5) // preferencePageButton - 设置
+	        {
+	            ui->stackedWidget->setCurrentIndex(4); // extensionPage
+	            ui->tabWidget->setCurrentIndex(12); // tab_3 "设置"
+	            
+	            hideRoomIdWidget();
+	            settings->setValue("mainwindow/stackIndex", 4);
+	            
+	            foreach (auto btn, sideButtonList) {
+	                btn->setNormalColor(Qt::transparent);
+	                btn->update();
+	            }
+	            sideButtonList.at(5)->setNormalColor(themeSbg);
+	            return ;
+	        }
 
 			
             ui->stackedWidget->setCurrentIndex(sideButtonList.indexOf(button));
