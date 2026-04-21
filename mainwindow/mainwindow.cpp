@@ -2340,7 +2340,7 @@ void MainWindow::getCookieAccount()
 {
     if (browserCookie.isEmpty())
         return ;
-    get("http://api.bilibili.com/x/member/web/account", [=](QJsonObject json){
+    get("https://api.bilibili.com/x/member/web/account", [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
             statusLabel->setText(json.value("message").toString());
@@ -2361,7 +2361,7 @@ void MainWindow::getCookieAccount()
 
 void MainWindow::getRobotInfo()
 {
-    QString url = "http://api.bilibili.com/x/space/acc/info?mid=" + cookieUid;
+    QString url = "https://api.bilibili.com/x/space/acc/info?mid=" + cookieUid;
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
@@ -2443,7 +2443,7 @@ void MainWindow::getRoomUserInfo()
             "info": {
                 "uid": 20285041,
                 "uname": "懒一夕智能科技",
-                "uface": "http://i1.hdslb.com/bfs/face/97ae8f0f0e09fbc22fa680c4f5ed93f92678c9eb.jpg",
+                "uface": "https://i1.hdslb.com/bfs/face/97ae8f0f0e09fbc22fa680c4f5ed93f92678c9eb.jpg",
                 "main_rank": 10000,
                 "bili_vip": 2,
                 "mobile_verify": 1,
@@ -3505,7 +3505,7 @@ QPixmap MainWindow::getTopRoundedPixmap(QPixmap pixmap, int radius) const
 
 void MainWindow::getUpInfo(QString uid)
 {
-    QString url = "http://api.bilibili.com/x/space/acc/info?mid=" + uid;
+    QString url = "https://api.bilibili.com/x/space/acc/info?mid=" + uid;
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
@@ -3631,7 +3631,7 @@ void MainWindow::getDanmuInfo()
 
 void MainWindow::getFansAndUpdate()
 {
-    QString url = "http://api.bilibili.com/x/relation/followers?vmid=" + upUid;
+    QString url = "https://api.bilibili.com/x/relation/followers?vmid=" + upUid;
     get(url, [=](QJsonObject json){
         QJsonArray list = json.value("data").toObject().value("list").toArray();
         QList<FanBean> newFans;
@@ -7557,7 +7557,7 @@ void MainWindow::slotBinaryMessageReceived(const QByteArray &message)
                         "data": {
                             "rank": 9,
                             "uname": "丸嘻嘻",
-                            "face": "http://i2.hdslb.com/bfs/face/17f1f3994cb4b2bba97f1557ffc7eb34a05e119b.jpg",
+                            "face": "https://i2.hdslb.com/bfs/face/17f1f3994cb4b2bba97f1557ffc7eb34a05e119b.jpg",
                             "timestamp": 1610173800,
                             "icon": "https://i0.hdslb.com/bfs/live/3f833451003cca16a284119b8174227808d8f936.png",
                             "area_name": "娱乐",
@@ -7654,7 +7654,7 @@ void MainWindow::slotBinaryMessageReceived(const QByteArray &message)
                                     {
                                         "rank": 1,
                                         "uid": 412357310,
-                                        "face": "http:\\/\\/i0.hdslb.com\\/bfs\\/face\\/e97fbf0e412b936763033055821e1ff5df56565a.jpg",
+                                        "face": "https:\\/\\/i0.hdslb.com\\/bfs\\/face\\/e97fbf0e412b936763033055821e1ff5df56565a.jpg",
                                         "uname": "\\u6cab\\u58a8\\u58a8\\u58a8\\u58a8\\u58a8\\u58a8\\u58a8\\u58a8"
                                     }
                                 ]
@@ -8020,7 +8020,7 @@ void MainWindow::handleMessage(QJsonObject json)
                 "action": "投喂",
                 "coin_type": "silver",
                 "uname": "懒一夕智能科技",
-                "face": "http://i1.hdslb.com/bfs/face/29183e0e21b60c01a95bb5c281566edb22af0f43.jpg",
+                "face": "https://i1.hdslb.com/bfs/face/29183e0e21b60c01a95bb5c281566edb22af0f43.jpg",
                 "batch_combo_id": "batch:gift:combo_id:20285041:2070473390:30607:1614439816.1655",      // 多个以及最后的 COMBO_SEND 是一样的
                 "rnd": "34158224",
                 "giftName": "小心心",
@@ -8084,7 +8084,7 @@ void MainWindow::handleMessage(QJsonObject json)
                 "action": "投喂",
                 "coin_type": "gold",
                 "uname": "懒一夕智能科技",
-                "face": "http://i1.hdslb.com/bfs/face/29183e0e21b60c01a95bb5c281566edb22af0f43.jpg",
+                "face": "https://i1.hdslb.com/bfs/face/29183e0e21b60c01a95bb5c281566edb22af0f43.jpg",
                 "batch_combo_id": "batch:gift:combo_id:20285041:2070473390:30823:1614440753.1786",
                 "rnd": "245758485",
                 "giftName": "小巧花灯",
@@ -8419,8 +8419,8 @@ void MainWindow::handleMessage(QJsonObject json)
                 "ts": 1613125845,
                 "uid": 35030958,
                 "user_info": {
-                    "face": "http://i0.hdslb.com/bfs/face/cdd8fbb13b2034dc3651096cbeef4b5e89765c35.jpg",
-                    "face_frame": "http://i0.hdslb.com/bfs/live/78e8a800e97403f1137c0c1b5029648c390be390.png",
+                    "face": "https://i0.hdslb.com/bfs/face/cdd8fbb13b2034dc3651096cbeef4b5e89765c35.jpg",
+                    "face_frame": "https://i0.hdslb.com/bfs/live/78e8a800e97403f1137c0c1b5029648c390be390.png",
                     "guard_level": 3,
                     "is_main_vip": 1,
                     "is_svip": 0,
@@ -8517,8 +8517,8 @@ void MainWindow::handleMessage(QJsonObject json)
                 "ts": 1613125845,
                 "uid": "35030958",
                 "user_info": {
-                    "face": "http://i0.hdslb.com/bfs/face/cdd8fbb13b2034dc3651096cbeef4b5e89765c35.jpg",
-                    "face_frame": "http://i0.hdslb.com/bfs/live/78e8a800e97403f1137c0c1b5029648c390be390.png",
+                    "face": "https://i0.hdslb.com/bfs/face/cdd8fbb13b2034dc3651096cbeef4b5e89765c35.jpg",
+                    "face_frame": "https://i0.hdslb.com/bfs/live/78e8a800e97403f1137c0c1b5029648c390be390.png",
                     "guard_level": 3,
                     "is_main_vip": 1,
                     "is_svip": 0,
@@ -8550,7 +8550,7 @@ void MainWindow::handleMessage(QJsonObject json)
                     "hadJoin": 0,
                     "id": "3072200788973",
                     "num": 1,
-                    "storm_gif": "http://static.hdslb.com/live-static/live-room/images/gift-section/mobilegift/2/jiezou.gif?2017011901",
+                    "storm_gif": "https://static.hdslb.com/live-static/live-room/images/gift-section/mobilegift/2/jiezou.gif?2017011901",
                     "time": 90
                 }
             }
@@ -8972,7 +8972,7 @@ void MainWindow::handleMessage(QJsonObject json)
             "data": {
                 "list": [
                     {
-                        "face": "http://i0.hdslb.com/bfs/face/5eae154b4ed09c8ae4017325f5fa1ed8fa3757a9.jpg",
+                        "face": "https://i0.hdslb.com/bfs/face/5eae154b4ed09c8ae4017325f5fa1ed8fa3757a9.jpg",
                         "guard_level": 3,
                         "rank": 1,
                         "score": "1380",
@@ -8980,7 +8980,7 @@ void MainWindow::handleMessage(QJsonObject json)
                         "uname": "分说的佛酱"
                     },
                     {
-                        "face": "http://i2.hdslb.com/bfs/face/65536122b97302b86b93847054d4ab8cc155afe3.jpg",
+                        "face": "https://i2.hdslb.com/bfs/face/65536122b97302b86b93847054d4ab8cc155afe3.jpg",
                         "guard_level": 3,
                         "rank": 2,
                         "score": "610",
@@ -9468,7 +9468,7 @@ void MainWindow::judgeUserRobotByFans(LiveDanmaku danmaku, DanmakuFunc ifNot, Da
     }
 
     // 网络判断
-    QString url = "http://api.bilibili.com/x/relation/stat?vmid=" + snum(danmaku.getUid());
+    QString url = "https://api.bilibili.com/x/relation/stat?vmid=" + snum(danmaku.getUid());
     get(url, [=](QJsonObject json){
         int code = json.value("code").toInt();
         if (code != 0)
@@ -9501,7 +9501,7 @@ void MainWindow::judgeUserRobotByFans(LiveDanmaku danmaku, DanmakuFunc ifNot, Da
 
 void MainWindow::judgeUserRobotByUpstate(LiveDanmaku danmaku, DanmakuFunc ifNot, DanmakuFunc ifIs)
 {
-    QString url = "http://api.bilibili.com/x/space/upstat?mid=" + snum(danmaku.getUid());
+    QString url = "https://api.bilibili.com/x/space/upstat?mid=" + snum(danmaku.getUid());
     get(url, [=](QJsonObject json){
         int code = json.value("code").toInt();
         if (code != 0)
@@ -9536,7 +9536,7 @@ void MainWindow::judgeUserRobotByUpstate(LiveDanmaku danmaku, DanmakuFunc ifNot,
 
 void MainWindow::judgeUserRobotByUpload(LiveDanmaku danmaku, DanmakuFunc ifNot, DanmakuFunc ifIs)
 {
-    QString url = "http://api.vc.bilibili.com/link_draw/v1/doc/upload_count?uid=" + snum(danmaku.getUid());
+    QString url = "https://api.vc.bilibili.com/link_draw/v1/doc/upload_count?uid=" + snum(danmaku.getUid());
     get(url, [=](QJsonObject json){
         int code = json.value("code").toInt();
         if (code != 0)
@@ -10337,7 +10337,7 @@ void MainWindow::getRoomLiveVideoUrl(StringFunc func)
 {
     if (roomId.isEmpty())
         return ;
-    QString url = "http://api.live.bilibili.com/room/v1/Room/playUrl?cid=" + roomId
+    QString url = "https://api.live.bilibili.com/room/v1/Room/playUrl?cid=" + roomId
             + "&quality=4&qn=10000&platform=web&otype=json";
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
@@ -10348,7 +10348,7 @@ void MainWindow::getRoomLiveVideoUrl(StringFunc func)
 
         // 获取链接
         QJsonArray array = json.value("data").toObject().value("durl").toArray();
-        /*"url": "http://d1--cn-gotcha04.bilivideo.com/live-bvc/521719/live_688893202_7694436.flv?cdn=cn-gotcha04\\u0026expires=1607505058\\u0026len=0\\u0026oi=1944862322\\u0026pt=\\u0026qn=10000\\u0026trid=40938d869aca4cb39041730f74ff9051\\u0026sigparams=cdn,expires,len,oi,pt,qn,trid\\u0026sign=ac701ba60c346bf3a173e56bcb14b7b9\\u0026ptype=0\\u0026src=9\\u0026sl=1\\u0026order=1",
+        /*"url": "https://d1--cn-gotcha04.bilivideo.com/live-bvc/521719/live_688893202_7694436.flv?cdn=cn-gotcha04\\u0026expires=1607505058\\u0026len=0\\u0026oi=1944862322\\u0026pt=\\u0026qn=10000\\u0026trid=40938d869aca4cb39041730f74ff9051\\u0026sigparams=cdn,expires,len,oi,pt,qn,trid\\u0026sign=ac701ba60c346bf3a173e56bcb14b7b9\\u0026ptype=0\\u0026src=9\\u0026sl=1\\u0026order=1",
           "length": 0,
           "order": 1,
           "stream_type": 0,
