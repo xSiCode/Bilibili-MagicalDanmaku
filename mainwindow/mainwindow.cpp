@@ -127,6 +127,21 @@ void MainWindow::initView()
 	            sideButtonList.at(3)->setNormalColor(themeSbg);
 	            return ;
 	        }
+			else if (i == 4) // extensionPageButton - 扩展
+	        {
+	            ui->stackedWidget->setCurrentIndex(4); // extensionPage
+	            // 不改变tabWidget的当前索引，保持用户上次选择的标签页
+	            
+	            hideRoomIdWidget();
+	            settings->setValue("mainwindow/stackIndex", 4);
+	            
+	            foreach (auto btn, sideButtonList) {
+	                btn->setNormalColor(Qt::transparent);
+	                btn->update();
+	            }
+	            sideButtonList.at(4)->setNormalColor(themeSbg);
+	            return ;
+	        }
 			else if (i == 5) // preferencePageButton - 设置
 	        {
 	            ui->stackedWidget->setCurrentIndex(4); // extensionPage
