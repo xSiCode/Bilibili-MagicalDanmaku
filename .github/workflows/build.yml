@@ -13,7 +13,7 @@ jobs:
         arch: 'win64_mingw73'
     - name: Build
       run: |
-        qmake
+        qmake CONFIG+=debug          # ← 添加 CONFIG+=debug
         mingw32-make
     - name: Deploy dependencies
       shell: pwsh
@@ -27,7 +27,7 @@ jobs:
         Write-Host "找到 exe: $($exe.FullName)"
     
         # 运行 windeployqt 部署 Qt 依赖
-        & windeployqt $exe.FullName
+        & windeployqt --debug $exe.FullName
     
         # 准备部署目录
         $deployDir = "deploy"
