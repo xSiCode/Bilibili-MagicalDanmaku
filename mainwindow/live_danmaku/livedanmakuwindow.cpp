@@ -2583,7 +2583,7 @@ void LiveDanmakuWindow::getUserInfo(qint64 uid, QListWidgetItem* item)
         QJsonObject json = document.object();
         if (json.value("code").toInt() != 0)
         {
-            qDebug() << "返回结果不为0：" << json.value("message").toString();
+            qDebug() << "返回结果不为0：livedanmakuwindow getUserInfo" << json.value("message").toString();
             return ;
         }
 
