@@ -2347,6 +2347,8 @@ void LiveDanmakuWindow::showGuardInAction(qint64 roomId, qint64 uid, QAction *ac
     request->setHeader(QNetworkRequest::CookieHeader, getCookies());
     request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded; charset=UTF-8");
     request->setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36");
+    request.setRawHeader("Referer", "https://www.bilibili.com/");
+    
     connect(manager, &QNetworkAccessManager::finished, action, [=](QNetworkReply* reply){
         QByteArray ba = reply->readAll();
         manager->deleteLater();
