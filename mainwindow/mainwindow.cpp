@@ -78,34 +78,58 @@ void MainWindow::initView()
         connect(button, &InteractiveButtonBase::clicked, this, [=]{
             int prevIndex = ui->stackedWidget->currentIndex();
 			
-                        // 特殊处理：答谢按钮需要跳转到extensionPage并切换到答谢tab
-                        if (button == ui->thankPageButton)
-                        {
-                            // 切换到扩展页面（索引4）
-                            ui->stackedWidget->setCurrentIndex(4);
-                            // 切换到答谢标签页（tab_4是索引2）
-                            ui->tabWidget->setCurrentIndex(2);
-
-                            // 隐藏房间ID控件
-                            hideRoomIdWidget();
-
-                            // 保存状态
-                            settings->setValue("mainwindow/stackIndex", 4);
-                            settings->setValue("mainwindow/tabIndex", 2);
-
-                            // 更新按钮样式
-                            foreach (auto btn, sideButtonList)
-                            {
-                                btn->setNormalColor(Qt::transparent);
-                                btn->update();
-                            }
-                            sideButtonList.at(2)->setNormalColor(themeSbg);
-                            return ;
-                        }
-			
             if (prevIndex == i) // 同一个索引，不用重复切换
                 return ;
 
+		        // 特殊处理：弹幕、答谢、点歌按钮需要跳转到extensionPage并切换到对应标签
+	        if (i == 1) // danmakuPageButton - 弹幕
+	        {
+	            ui->stackedWidget->setCurrentIndex(4); // extensionPage
+	            ui->tabWidget->setCurrentIndex(0); // tab_2 "弹幕"
+	            
+	            hideRoomIdWidget();
+	            settings->setValue("mainwindow/stackIndex", 4);
+	            
+	            foreach (auto btn, sideButtonList) {
+	                btn->setNormalColor(Qt::transparent);
+	                btn->update();
+	            }
+	            sideButtonList.at(1)->setNormalColor(themeSbg);
+	            return ;
+	        }
+	        else if (i == 2) // thankPageButton - 答谢
+	        {
+	            ui->stackedWidget->setCurrentIndex(4); // extensionPage
+	            ui->tabWidget->setCurrentIndex(2); // tab_4 "答谢"
+	            
+	            hideRoomIdWidget();
+	            settings->setValue("mainwindow/stackIndex", 4);
+	            
+	            foreach (auto btn, sideButtonList) {
+	                btn->setNormalColor(Qt::transparent);
+	                btn->update();
+	            }
+	            sideButtonList.at(2)->setNormalColor(themeSbg);
+	            return ;
+	        }
+	        else if (i == 3) // musicPageButton - 点歌
+	        {
+	            ui->stackedWidget->setCurrentIndex(4); // extensionPage
+	            ui->tabWidget->setCurrentIndex(3); // tab_8 "点歌"
+	            
+	            hideRoomIdWidget();
+	            settings->setValue("mainwindow/stackIndex", 4);
+	            
+	            foreach (auto btn, sideButtonList) {
+	                btn->setNormalColor(Qt::transparent);
+	                btn->update();
+	            }
+	            sideButtonList.at(3)->setNormalColor(themeSbg);
+	            return ;
+	        }
+
+
+			
             ui->stackedWidget->setCurrentIndex(sideButtonList.indexOf(button));
 
             // 房间ID
