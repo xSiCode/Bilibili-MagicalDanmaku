@@ -2370,7 +2370,7 @@ void MainWindow::getCookieAccount()
         if (json.value("code").toInt() != 0)
         {
             statusLabel->setText(json.value("message").toString());
-            qCritical() << s8("账号登录返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("账号登录返回结果不为0 2373：") << json.value("message").toString();
             return ;
         }
 
@@ -2391,7 +2391,7 @@ void MainWindow::getRobotInfo()
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：2394") << json.value("message").toString();
             return ;
         }
         QJsonObject data = json.value("data").toObject();
@@ -2575,7 +2575,7 @@ void MainWindow::getRoomUserInfo()
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0： 2578") << json.value("message").toString();
             return ;
         }
 
@@ -3106,7 +3106,7 @@ void MainWindow::getRoomInit()
         QJsonObject json = document.object();
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << "返回结果不为0：" << json.value("message").toString();
+            qCritical() << "返回结果不为0：3109" << json.value("message").toString();
             return ;
         }
 
@@ -3121,7 +3121,7 @@ void MainWindow::getRoomInfo(bool reconnect)
     get(url, [=](QJsonObject json) {
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：3124") << json.value("message").toString();
             return ;
         }
 
@@ -3535,7 +3535,7 @@ void MainWindow::getUpInfo(QString uid)
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：3538") << json.value("message").toString();
             return ;
         }
         QJsonObject data = json.value("data").toObject();
@@ -3626,7 +3626,7 @@ void MainWindow::getDanmuInfo()
         QJsonObject json = document.object();
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：3629") << json.value("message").toString();
             return ;
         }
 
@@ -10368,7 +10368,7 @@ void MainWindow::getRoomLiveVideoUrl(StringFunc func)
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：10371") << json.value("message").toString();
             return ;
         }
 
@@ -10396,7 +10396,7 @@ void MainWindow::roomEntryAction()
     post(url, QByteArray(), [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：10399") << json.value("message").toString();
             return ;
         }
     });
@@ -10455,7 +10455,7 @@ void MainWindow::getBagList(qint64 sendExpire)
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：10458") << json.value("message").toString();
             return ;
         }
 
@@ -10768,7 +10768,7 @@ void MainWindow::getPkMatchInfo()
     get(url, [=](QJsonObject json) {
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：10771") << json.value("message").toString();
             return ;
         }
 
@@ -12172,7 +12172,7 @@ void MainWindow::connectPkRoom()
 
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("pk返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("pk返回结果不为0：12175") << json.value("message").toString();
             return ;
         }
 
@@ -12817,7 +12817,7 @@ void MainWindow::switchMedalTo(qint64 targetRoomId)
     get(url, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：12820") << json.value("message").toString();
             return ;
         }
 
@@ -12905,7 +12905,7 @@ void MainWindow::wearMedal(qint64 medalId)
     post(url, ba, [=](QJsonObject json){
         if (json.value("code").toInt() != 0)
         {
-            qCritical() << s8("返回结果不为0：") << json.value("message").toString();
+            qCritical() << s8("返回结果不为0：12908") << json.value("message").toString();
             return ;
         }
         qDebug() << "佩戴主播粉丝勋章成功";
@@ -12933,7 +12933,7 @@ void MainWindow::doSign()
         if (json.value("code").toInt() != 0)
         {
             QString msg = json.value("message").toString();
-            qCritical() << s8("返回结果不为0：") << msg;
+            qCritical() << s8("返回结果不为0：12936") << msg;
             ui->autoDoSignCheck->setText(msg);
         }
         else
@@ -12968,7 +12968,7 @@ void MainWindow::joinLOT(qint64 id, bool follow)
         if (json.value("code").toInt() != 0)
         {
             QString msg = json.value("message").toString();
-            qCritical() << s8("返回结果不为0：") << msg;
+            qCritical() << s8("返回结果不为0：12971") << msg;
             ui->autoLOTCheck->setText(msg);
             ui->autoLOTCheck->setToolTip(msg);
         }
@@ -13005,7 +13005,7 @@ void MainWindow::joinStorm(qint64 id)
         if (json.value("code").toInt() != 0)
         {
             QString msg = json.value("message").toString();
-            qCritical() << s8("返回结果不为0：") << msg;
+            qCritical() << s8("返回结果不为0：13008") << msg;
             ui->autoLOTCheck->setText(msg);
             ui->autoLOTCheck->setToolTip(msg);
         }
@@ -13055,7 +13055,7 @@ void MainWindow::sendPrivateMsg(qint64 uid, QString msg)
         if (json.value("code").toInt() != 0)
         {
             QString msg = json.value("message").toString();
-            qCritical() << s8("发送消息出错，返回结果不为0：") << msg;
+            qCritical() << s8("发送消息出错，返回结果不为0：13058") << msg;
             return ;
         }
     });
